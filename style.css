@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+body {
+  text-align: center;
+  background: #ffe1af;
+}
+
+h1 {
+  font-family: "Press Start 2P", cursive;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  font-weight: 900;
+  color: #ffe1af;
+  display: inline-block;
+  padding: 20px;
+  border-radius: 20px;
+  width: 30%;
+  margin: 15px auto;
+}
+
+.main {
+  background: #a2cdcd;
+  width: 60%;
+  margin: 14% auto;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: #fef1e6;
+  font-family: "Odibee Sans", cursive;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 40px 0;
+}
+.center input {
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  flex: 1;
+}
+
+.center button {
+  border: none;
+  background: #ffe1af;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input {
+  display: flex;
+  justify-content: space-around;
+}
+
+.yourScore,
+.computerScore {
+  font-size: 2rem;
+  border: 2px solid #ffe1af;
+  border-radius: 2px;
+  padding: 5px;
+}
+
+.lower {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.win {
+  background: green;
+}
+
+.loose {
+  background: red;
+}
+
+.refresh {
+  padding: 20px;
+  border-radius: 20px;
+  width: 30%;
+  margin: 15px auto;
+  background: #ffe1af;
+}
+
+.invisible {
+  visibility: hidden;
+}
