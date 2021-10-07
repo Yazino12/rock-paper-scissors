@@ -6,6 +6,7 @@ let computerCurrentScore = 0;
 
 document.querySelector("h2").classList.add("invisible");
 document.querySelector(".refresh").classList.add("invisible");
+
 //flipping text for computer's score text
 let trans = document.querySelector(".trans").textContent;
 const transo = function () {
@@ -23,9 +24,10 @@ document.querySelector(".refresh").addEventListener("click", function () {
   reset();
 });
 
+//Restore Initial conditions
+
 function reset() {
   document.querySelector("h1").textContent = "Let the game start!";
-  document.querySelector("input").value = "";
   document.querySelector(".yourScore").textContent = "0";
   document.querySelector(".computerScore").textContent = "0";
   document.querySelector(".your").textContent = "Your input";
@@ -33,6 +35,7 @@ function reset() {
   document.querySelector("h2").classList.add("invisible");
   document.querySelector("h2").classList.remove("win");
   document.querySelector("h2").classList.remove("loose");
+  document.body.style.backgroundColor = "#ffe1af";
   userCurrentScore = 0;
   computerCurrentScore = 0;
 }
@@ -44,25 +47,47 @@ function finalize() {
   document.querySelector("h2").classList.add("invisible");
 }
 
-//Execute button
+//Execute Button clicks
 
-document.querySelector(".submit").addEventListener("click", function () {
-  let random = Math.ceil(Math.random() * 3) - 1;
-  const values = ["Rock", "Paper", "Scissors"];
-  let computerSelection = values[random];
-  let yourInput = document.querySelector("input").value;
+let random = Math.ceil(Math.random() * 3) - 1;
+const values = ["Rock", "Paper", "Scissors"];
+let computerSelection = values[random];
+
+document.querySelector(".rock1").addEventListener("click", function () {
+  random = Math.ceil(Math.random() * 3) - 1;
+  computerSelection = values[random];
+  let yourInput = document.querySelector(".rock1").alt;
   let playerSelection = yourInput;
-  if (
-    yourInput.length > 0 &&
-    userCurrentScore < 5 &&
-    computerCurrentScore < 5
-  ) {
+  automate(playerSelection);
+});
+
+document.querySelector(".paper1").addEventListener("click", function () {
+  random = Math.ceil(Math.random() * 3) - 1;
+  computerSelection = values[random];
+  let yourInput = document.querySelector(".paper1").alt;
+  let playerSelection = yourInput;
+  automate(playerSelection);
+});
+
+document.querySelector(".scissors1").addEventListener("click", function () {
+  random = Math.ceil(Math.random() * 3) - 1;
+  computerSelection = values[random];
+  let yourInput = document.querySelector(".scissors1").alt;
+  let player = yourInput;
+  automate(player);
+});
+
+//Compare User and Computer
+
+function automate(playerSelection) {
+  if (userCurrentScore < 5 && computerCurrentScore < 5) {
     if (
-      yourInput.toUpperCase() == "ROCK" ||
-      yourInput.toUpperCase() == "PAPER" ||
-      yourInput.toUpperCase() == "SCISSORS"
+      playerSelection.toUpperCase() == "ROCK" ||
+      playerSelection.toUpperCase() == "PAPER" ||
+      playerSelection.toUpperCase() == "SCISSORS"
     ) {
-      document.querySelector(".your").textContent = yourInput.toUpperCase();
+      document.querySelector(".your").textContent =
+        playerSelection.toUpperCase();
       document.querySelector(".computers").textContent =
         computerSelection.toUpperCase();
 
@@ -76,7 +101,7 @@ document.querySelector(".submit").addEventListener("click", function () {
         (playerSelection.toUpperCase() == "PAPER" &&
           computerSelection.toUpperCase() == "SCISSORS")
       ) {
-        userLoses();
+        userLoses(playerSelection);
       } else if (
         (computerSelection.toUpperCase() == "ROCK" &&
           playerSelection.toUpperCase() == "PAPER") ||
@@ -85,84 +110,78 @@ document.querySelector(".submit").addEventListener("click", function () {
         (computerSelection.toUpperCase() == "PAPER" &&
           playerSelection.toUpperCase() == "SCISSORS")
       ) {
-        userWins();
+        userWins(playerSelection);
       }
-      document.querySelector("input").value = "";
-    } else {
-      document.querySelector("h2").textContent =
-        "Choose: ROCK | PAPER | SCISSORS";
-      document.querySelector("h2").classList.remove("invisible");
-      document.querySelector(".refresh").classList.remove("invisible");
-      document.querySelector("h2").classList.remove("win");
-      document.querySelector("h2").classList.remove("loose");
-      document.querySelector(".your").textContent = "Your input";
-      document.querySelector(".computers").textContent = "Computer's input";
-      document.querySelector("input").value = "";
+    }
+  } else {
+    if (computerCurrentScore == 5 && userCurrentScore < 5) {
+      document.querySelector(
+        "h1"
+      ).textContent = `You Lost with ${computerCurrentScore}:${userCurrentScore}`;
+      document.body.style.backgroundColor = "#FF5C58";
+      finalize();
+    } else if (userCurrentScore == 5 && computerCurrentScore < 5) {
+      document.querySelector(
+        "h1"
+      ).textContent = `You Win with ${userCurrentScore}:${computerCurrentScore}`;
+      document.body.style.backgroundColor = "#B1E693";
+      finalize();
     }
   }
+}
 
-  if (computerCurrentScore == 5 && userCurrentScore < 5) {
-    document.querySelector(
-      "h1"
-    ).textContent = `You Lost with ${computerCurrentScore}:${userCurrentScore}`;
-    finalize();
-  } else if (userCurrentScore == 5 && computerCurrentScore < 5) {
-    document.querySelector(
-      "h1"
-    ).textContent = `You Win with ${userCurrentScore}:${computerCurrentScore}`;
-    finalize();
-  } else if (userCurrentScore == 5 && computerCurrentScore == 5) {
-    document.querySelector(
-      "h1"
-    ).textContent = `We have Draw ${computerCurrentScore}:${userCurrentScore}`;
-    finalize();
-  }
+//Win Lose Draw Functionality
 
-  function userWins() {
-    document.querySelector("h1").textContent = `Current Leader: ${
-      userCurrentScore > computerCurrentScore ? "You" : "Computer"
-    }`;
-    document.querySelector(
-      "h2"
-    ).textContent = `You win! ${playerSelection} beats ${computerSelection}`;
-    document.querySelector("h2").classList.remove("loose");
-    document.querySelector("h2").classList.add("win");
-    document.querySelector("h2").classList.remove("invisible");
-    document.querySelector(".refresh").classList.remove("invisible");
-    userCurrentScore++;
-    document.querySelector(".yourScore").textContent = userCurrentScore;
+function userWins(playerSelection) {
+  userCurrentScore++;
+  document.querySelector("h1").textContent = `Current Leader: ${
+    userCurrentScore >= computerCurrentScore ? "You" : "Computer"
+  }`;
+  document.querySelector(
+    "h2"
+  ).textContent = `You win! ${playerSelection} beats ${computerSelection}`;
+  document.querySelector("h2").classList.remove("loose");
+  document.querySelector("h2").classList.add("win");
+  document.querySelector("h2").classList.remove("invisible");
+  document.querySelector(".refresh").classList.remove("invisible");
+  document.querySelector(".yourScore").textContent = userCurrentScore;
+  if (userCurrentScore == 5) {
+    automate("nothing");
   }
+}
 
-  function userLoses() {
-    document.querySelector("h1").textContent = `Current Leader: ${
-      userCurrentScore > computerCurrentScore ? "You" : "Computer"
-    }`;
-    document.querySelector(
-      "h2"
-    ).textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
-    document.querySelector("h2").classList.remove("win");
-    document.querySelector("h2").classList.add("loose");
-    document.querySelector("h2").classList.remove("invisible");
-    document.querySelector(".refresh").classList.remove("invisible");
-    computerCurrentScore++;
-    document.querySelector(".computerScore").textContent = computerCurrentScore;
+function userLoses(playerSelection) {
+  computerCurrentScore++;
+  document.querySelector("h1").textContent = `Current Leader: ${
+    computerCurrentScore >= userCurrentScore ? "Computer" : "You"
+  }`;
+  document.querySelector(
+    "h2"
+  ).textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+  document.querySelector("h2").classList.remove("win");
+  document.querySelector("h2").classList.add("loose");
+  document.querySelector("h2").classList.remove("invisible");
+  document.querySelector(".refresh").classList.remove("invisible");
+  document.querySelector(".computerScore").textContent = computerCurrentScore;
+  if (computerCurrentScore == 5) {
+    automate("nothing");
   }
+}
 
-  function draw() {
-    document.querySelector("h2").textContent = "Draw!";
-    document.querySelector("h2").classList.remove("invisible");
-    document.querySelector(".refresh").classList.remove("invisible");
-    document.querySelector("h2").classList.remove("win");
-    document.querySelector("h2").classList.remove("loose");
-  }
-});
+function draw() {
+  document.querySelector("h2").textContent = "Draw!";
+  document.querySelector("h2").classList.remove("invisible");
+  document.querySelector(".refresh").classList.remove("invisible");
+  document.querySelector("h2").classList.remove("win");
+  document.querySelector("h2").classList.remove("loose");
+}
 
 //LeaderBoard
 document.querySelector("h1");
-//Input
-document.querySelector("input");
-//Go Button
-document.querySelector(".submit");
+//Selection Buttons
+document.querySelector(".rock");
+document.querySelector(".paper");
+document.querySelector(".scissors");
 //Player Score
 document.querySelector(".yourScore");
 //Computer Score
